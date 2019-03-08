@@ -10,7 +10,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -22,10 +21,6 @@ import com.devmasterteam.tasks.entities.PriorityEntity;
 import com.devmasterteam.tasks.infra.operation.OperationListener;
 import com.devmasterteam.tasks.infra.security.SecurityPreferences;
 import com.devmasterteam.tasks.manager.PriorityManager;
-import com.google.android.gms.ads.AdListener;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.InterstitialAd;
-import com.google.android.gms.ads.MobileAds;
 
 import java.util.Calendar;
 import java.util.List;
@@ -35,7 +30,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private PriorityManager mPriorityManager;
     private SecurityPreferences mSecurityPreferences;
     private ViewHolder mViewHolder = new ViewHolder();
-    private InterstitialAd mInterstitialAd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,6 +70,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // Incia a fragment padrão
         this.startDefaultFragment();
 
+        /**Código só funciona quando ID é fornecido corretamente
         MobileAds.initialize(this, "YOUR_ADMOB_ID");
 
         mInterstitialAd = new InterstitialAd(this);
@@ -88,8 +83,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 // Load the next interstitial.
                 mInterstitialAd.loadAd(new AdRequest.Builder().build());
             }
-
         });
+         */
 
     }
 
@@ -143,11 +138,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         try {
 
             if (id == R.id.nav_all_tasks) {
-                if (mInterstitialAd.isLoaded()) {
-                    mInterstitialAd.show();
-                } else {
-                    Log.d("TAG", "The interstitial wasn't loaded yet.");
-                }
                 fragment = TaskListFragment.newInstance(TaskConstants.TASKFILTER.NO_FILTER);
             } else if (id == R.id.nav_next_seven_days) {
                 fragment = TaskListFragment.newInstance(TaskConstants.TASKFILTER.NEXT_7_DAYS);
